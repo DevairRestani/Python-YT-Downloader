@@ -1,0 +1,4 @@
+chardet==4.0.0
+idna==2.10
+pytube==10.8.2
+urllib3==1.26.5
