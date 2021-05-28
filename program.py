@@ -9,7 +9,7 @@ ACTIVE_THREAD_POOL =  10
 
 # cria um objeto Playlist a partir da url e o retorna 
 def get_playlist() -> Playlist:
-    #Criando uma playlist com a lista de videos do NX Zero
+    # Buscando uma playlist com a lista de videos do NX Zero
     pl = Playlist('https://www.youtube.com/watch?v=XdglM81b4g8&list=PLPwbRa5XTXhMQ_MHiOWqTISJhy1cgELp1')
 
     print(f'Numero de videos na playlist: {len(pl.video_urls)}')
