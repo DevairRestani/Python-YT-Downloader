@@ -5,32 +5,39 @@ from multiprocessing import Pool
 DOWNLOAD_PATH = './Downloads/'
 
 # define a quantidade de downloads que serão realiados em simultaneo
-ACTIVE_THREAD_POOL =  10
+ACTIVE_THREAD_POOL = 10
 
-# cria um objeto Playlist a partir da url e o retorna 
+# cria um objeto Playlist a partir da url e o retorna
+
+
 def get_playlist() -> Playlist:
     # Buscando uma playlist com a lista de videos do NX Zero
-    pl = Playlist('https://www.youtube.com/watch?v=XdglM81b4g8&list=PLPwbRa5XTXhMQ_MHiOWqTISJhy1cgELp1')
+    pl = Playlist(input("Link da playlist: "))
 
     print(f'Numero de videos na playlist: {len(pl.video_urls)}')
 
     return pl
 
 # recebe o objeto de um video contido no objeto Playlist e faz o download
-def download_video(video: YouTube) -> None:
+
+
+def download_video(video: YouTube):
     print(f'Baixando: {video.vid_info_url}')
 
     # seleciona os arquivos de audio com a melhor qualidade disponivel
-    stream = video.streams.get_audio_only()
+    try:
+        stream = video.streams.get_audio_only()
 
-    # realza o download
-    stream.download(DOWNLOAD_PATH)
+        # realza o download
+        stream.download(DOWNLOAD_PATH)
+    except:
+        print(f'Erro ao baixar {video.vid_info_url}')
 
 
 if __name__ == '__main__':
     # cria uma lista dos videos na Paylist
     playlist_videos = get_playlist().videos
-    
+
     # cria a fila de execuções e a executa passando o objeto videos como parametro para a funcao de download
     with Pool(ACTIVE_THREAD_POOL) as p:
         p.map(download_video, playlist_videos)
